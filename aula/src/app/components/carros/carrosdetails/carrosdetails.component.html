@@ -1,0 +1,128 @@
+<br />
+<div class="container">
+  <div class="row">
+
+    <div class="col-lg-12 centralizar topo">
+      <div class="card">
+        <div class="card-body">
+          <h3>Cadastro de carro:</h3>
+          <br>
+          <mdb-form-control>
+            <input mdbInput type="text" id="usuario" class="form-control" [(ngModel)]="carro.nome" />
+            <label mdbLabel class="form-label" for="usuario">Nome</label>
+          </mdb-form-control>
+          <br />
+
+          <div>
+            @if(carro.marca == null){
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="buscarMarca()">
+              Buscar Marca
+            </button>
+          }@else{
+            <div class="row">
+              <div class="col-lg-8">
+                <p class="text-primary alert-primary">Marca: {{carro.marca.nome}}</p>
+              </div>
+              <div class="col-lg-4">
+                <button type="button" class="btn btn-warning btn-rounded" mdbRipple (click)="buscarMarca()">
+                  Trocar Marca
+                </button>
+              </div>
+            </div>
+
+
+          }
+          </div>
+
+          <br />
+
+          <div>
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="buscarAcessorio()">
+              Buscar Acessório
+            </button>
+
+            <br>
+
+
+            <table border="1" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (acessorio of carro.acessorios; track $index) {
+                <tr>
+                  <td>{{ acessorio.id }}</td>
+                  <td>{{ acessorio.nome }}</td>
+                  <td class="direita">
+                    <button type="button" class="btn btn-danger btn-rounded" mdbRipple (click)="desvincularAcessorioCarro(acessorio)">
+                      Deletar
+                    </button>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+
+
+          </div>
+
+
+
+          <br /> <br />
+          <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="save()">
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<ng-template #modalMarcas>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Marcas</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+
+    <app-marcaslist [esconderBotoes]="true" (retorno)="retornoMarca($event)"></app-marcaslist>
+
+  </div>
+
+  </ng-template>
+
+
+
+
+<ng-template #modalAcessorios>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Acessórios</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+
+    <app-acessorioslist [esconderBotoes]="true" (retorno)="retornoAcessorio($event)"></app-acessorioslist>
+
+  </div>
+
+  </ng-template>
+
