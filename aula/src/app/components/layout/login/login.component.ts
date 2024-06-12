@@ -18,10 +18,13 @@ export class LoginComponent {
   loginService = inject(LoginService);
   router = inject(Router);
 
+  constructor(){
+    this.loginService.removerToken();
+  }
+
   logar() {
     this.loginService.logar(this.login).subscribe({
       next: token => { // QUANDO DÁ CERTO
-        console.log(token);
 		if(token)
 			this.loginService.addToken(token); //MUITO IMPORTANTE
         this.router.navigate(['/admin/carros']);
