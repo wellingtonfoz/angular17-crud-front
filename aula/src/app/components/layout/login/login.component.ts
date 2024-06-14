@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { Login } from '../../../auth/login';
+import { Login } from '../../../models/login';
 import { LoginService } from '../../../auth/login.service';
 
 @Component({
@@ -15,25 +15,32 @@ import { LoginService } from '../../../auth/login.service';
 export class LoginComponent {
   login: Login = new Login();
 
-  loginService = inject(LoginService);
   router = inject(Router);
+  loginService = inject(LoginService);
 
-  constructor(){
+  constructor() {
     this.loginService.removerToken();
   }
 
   logar() {
+
     this.loginService.logar(this.login).subscribe({
-      next: token => { // QUANDO DÁ CERTO
-		if(token)
-			this.loginService.addToken(token); //MUITO IMPORTANTE
-        this.router.navigate(['/admin/carros']);
+      next: token => {
+        if (token) { //o usuário e senha digitados estavam corretos
+          this.loginService.addToken(token);
+          if (this.loginService.hasPermission("ADMIN"))
+            this.router.navigate(['/admin/carros']);
+          else if (this.loginService.hasPermission("USER"))
+            this.router.navigate(['/admin/marcas']);
+        } else { //ou o usuário ou a senha estão incorretos
+          alert('usuário ou senha incorretos!');
+        }
       },
-      error: erro => { // QUANDO DÁ ERRO
-        alert('Exemplo de tratamento de erro/exception! Observe o erro no console!');
-        console.error(erro);
+      error: erro => {
+        alert('deu erro');
       }
     });
+
   }
 
 

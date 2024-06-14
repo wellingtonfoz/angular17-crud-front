@@ -5,13 +5,13 @@ import { Acessorio } from '../../../models/acessorio';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { AcessorioService } from '../../../services/acessorio.service';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { MarcaslistComponent } from '../../marcas/marcaslist/marcaslist.component';
 
 @Component({
   selector: 'app-acessoriosdetails',
   standalone: true,
-  imports: [MdbFormsModule, FormsModule, MarcaslistComponent],
+  imports: [MdbModalModule, MdbFormsModule, FormsModule, MarcaslistComponent],
   templateUrl: './acessoriosdetails.component.html',
   styleUrl: './acessoriosdetails.component.scss'
 })

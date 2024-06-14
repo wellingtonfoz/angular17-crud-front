@@ -49,5 +49,9 @@ export class LoginService {
       return false;
   }
 
+  getUsuarioLogado() {
+    return this.jwtDecode() as Usuario;
+  }
+
 
 }
